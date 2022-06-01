@@ -31,6 +31,7 @@ nrf_nvic_state_t nrf_nvic_state;
 #define BOOTLOADER_VERSION_REGISTER     NRF_TIMER2->CC[0]
 uint32_t bootloaderVersion = 0;
 static uint32_t _reset_reason = 0;
+static uint32_t _reset_pin = 0;
 
 void init( void )
 {
@@ -38,6 +39,8 @@ void init( void )
 
   // clear reset reason: can save it for application usage if needed.
   NRF_POWER->RESETREAS |= NRF_POWER->RESETREAS;
+
+  _reset_pin = NRF_GPIO->IN;
 
   // Retrieve bootloader version
   bootloaderVersion = BOOTLOADER_VERSION_REGISTER;
@@ -72,6 +75,11 @@ void init( void )
 uint32_t readResetReason(void)
 {
   return _reset_reason;
+}
+
+uint32_t readResetPin(void)
+{
+  return _reset_pin;
 }
 
 void enterUf2Dfu(void)

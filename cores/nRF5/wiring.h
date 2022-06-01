@@ -30,6 +30,7 @@ extern uint32_t bootloaderVersion;
 extern void init(void);
 
 uint32_t readResetReason(void);
+uint32_t readResetPin(void);
 
 void enterSerialDfu(void);
 void enterOTADfu(void);
